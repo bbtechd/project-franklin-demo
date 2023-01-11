@@ -1,4 +1,4 @@
-import { fetchPlaceholders, getMetadata, toClassName } from '../../scripts/scripts.js';
+import { fetchPlaceholders, getMetadata, toClassName } from '../../scripts/lib-franklin.js';
 
 export default async function decorateProduct(block) {
   const ph = await fetchPlaceholders();

@@ -95,8 +95,8 @@ async function loadLazy(doc) {
   const element = hash ? main.querySelector(hash) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  await loadHeader(doc.querySelector('header'));
+  await loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   addFavIcon(`${window.hlx.codeBasePath}/styles/favicon.svg`);
@@ -122,75 +122,3 @@ async function loadPage() {
 }
 
 loadPage();
-
-/**
- * ##############################################################
- * Product Block
- */
-
-/**
- * Sanitizes a name for use as class name.
- * @param {*} name The unsanitized name
- * @returns {string} The class name
- */
-export function toClassName(name) {
-  return name && typeof name === 'string'
-    ? name.toLowerCase().replace(/[^0-9a-z]/gi, '-')
-    : '';
-}
-
-/**
- * Sanitizes a name for use as class name.
- * @param {*} name The unsanitized name
- * @returns {string} The class name
- */
-export function toCamelCase(name) {
-  return toClassName(name).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-}
-
-/**
- * Gets placeholders object
- * @param {string} prefix
- */
-
-export async function fetchPlaceholders(prefix = 'default') {
-  window.placeholders = window.placeholders || {};
-  const loaded = window.placeholders[`${prefix}-loaded`];
-  if (!loaded) {
-    window.placeholders[`${prefix}-loaded`] = new Promise((resolve, reject) => {
-      try {
-        fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`, {
-          credentials: 'include',
-          mode: 'no-cors',
-        })
-          .then((resp) => resp.json())
-          .then((json) => {
-            const placeholders = {};
-            json.data.forEach((placeholder) => {
-              placeholders[toClassName(placeholder.Key)] = placeholder.Text;
-              placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
-            });
-            window.placeholders[prefix] = placeholders;
-            resolve();
-          });
-      } catch (e) {
-        // error loading placeholders
-        window.placeholders[prefix] = {};
-        reject();
-      }
-    });
-  }
-  await window.placeholders[`${prefix}-loaded`];
-  return (window.placeholders[prefix]);
-}
-
-/**
- * Retrieves the content of a metadata tag.
- * @param {string} name The metadata name (or property)
- * @returns {string} The metadata value
- */
-export function getMetadata(name) {
-  const attr = name && name.includes(':') ? 'property' : 'name';
-  const meta = document.head.querySelector(`meta[${attr}="${name}"]`);
-  return meta && meta.content;
-}
