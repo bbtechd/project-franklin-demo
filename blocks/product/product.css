@@ -275,7 +275,7 @@ div.product-wrapper {
     }
 
     .product .product-heading h1 {
-        font-size: var(--body-font-size-l);
+        font-size: var(--body-font-size-m);
     }
 
 }
