@@ -122,3 +122,65 @@ async function loadPage() {
 }
 
 loadPage();
+
+/**
+ * extra
+ */
+export async function getProductData(sku) {
+  const url = 'https://main--project-franklin-demo--bbtechd.hlx.page/product-data';
+  let product = {};
+  if (!sku) {
+    return product;
+  }
+  const res = await fetch(`${url}/${sku}`);
+  if (!res.ok) {
+    throw Error('failed to get product data');
+  }
+  product = await res.json();
+  return product;
+}
+
+export function titleCase(string) {
+  return string.toLowerCase()
+    .split(' ')
+    .map((word) => word.charAt(0)
+      .toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
+export function addMeta(name, pval = '') {
+  const attr = name && name.includes(':') ? 'property' : 'name';
+  const val = pval.replace(/["'<>]/g, '');
+  const tag = document.createElement('meta');
+  tag.setAttribute(attr, name);
+  tag.content = val;
+  document.head.appendChild(tag);
+}
+
+export function getIcon(icons, alt) {
+  // eslint-disable-next-line no-param-reassign
+  icons = Array.isArray(icons) ? icons : [icons];
+  const [defaultIcon, mobileIcon] = icons;
+  let name = (mobileIcon && window.innerWidth < 600) ? mobileIcon : defaultIcon;
+  let icon = `${name}.svg`;
+  if (name.endsWith('.png')) {
+    icon = name;
+    name = name.slice(0, -4);
+  }
+  return (`<img class="icon icon-${name}${alt ? ` icon-${alt}` : ''}" src="/icons/${icon}" alt="${alt || name}">`);
+}
+
+export function html(strs, ...params) {
+  let res = '';
+  strs.forEach((s, i) => {
+    const p = params[i];
+    res += s;
+    if (!p) { return; }
+    if (p instanceof HTMLElement) {
+      res += p.outerHTML;
+    } else {
+      res += p;
+    }
+  });
+  return res;
+}
