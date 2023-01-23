@@ -7,7 +7,7 @@ export default async function decorate(block) {
 
   const sku = window.location.pathname.split('/').pop();
 
-  const productInfo = getProductData(sku);
+  const productInfo = await getProductData(sku);
 
   // const productName = productInfo.data.Name;
 
