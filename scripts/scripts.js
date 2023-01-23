@@ -128,7 +128,7 @@ loadPage();
  */
 
 export async function getProductData(sku) {
-  const environment = window.host.split('.').pop();
+  const environment = window.location.hostname.split('.').pop();
 
   const url = `https://main--project-franklin-demo--bbtechd.hlx.${environment}/api/products`;
   let product = {};
