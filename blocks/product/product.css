@@ -43,7 +43,7 @@ figure.zoom img:hover {
 
 .product-details-div{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     padding-bottom: 40px;
 }
 
