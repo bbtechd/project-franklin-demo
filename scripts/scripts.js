@@ -128,14 +128,18 @@ loadPage();
  */
 
 export async function getProductData(sku) {
-  const environment = window.location.hostname.split('.').pop();
+  const { hostname } = window.location;
+  let url = 'http://localhost:3000';
+  if (hostname.includes('hlx.page')) {
+    const environment = hostname.split('.').pop();
+    url = `https://main--project-franklin-demo--bbtechd.hlx.${environment}`;
+  }
 
-  const url = `https://main--project-franklin-demo--bbtechd.hlx.${environment}/api/products`;
   let product = {};
   if (!sku) {
     return product;
   }
-  const res = await fetch(`${url}/${sku}.json`);
+  const res = await fetch(`${url}/api/products/${sku}.json`);
   if (!res.ok) {
     throw Error('failed to get product data');
   }
