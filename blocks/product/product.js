@@ -9,7 +9,7 @@ export default async function decorate(block) {
 
   const productInfo = getProductData(sku);
 
-  const productName = productInfo.data.Name;
+  // const productName = productInfo.data.Name;
 
   const productData = [];
 
@@ -24,7 +24,7 @@ export default async function decorate(block) {
   const productImageDiv = createTag('div', { class: 'product-images' });
   const productDetails = createTag('div', { class: 'product-details' });
 
-  productHeading.innerText = productName;
+  // productHeading.innerText = productName;
 
   productData.forEach((item, index) => {
     if (item) {
