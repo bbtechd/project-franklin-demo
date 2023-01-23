@@ -121,7 +121,7 @@ img.product-image-thumbnails{
 }
 
 .product-heading{
-    font-size: var(--heading-font-size-xxl);
+    font-size: var(--heading-font-size-l);
     font-family: var(--heading-font-family);
     font-weight: 500;
     line-height: 1.1;
