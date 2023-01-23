@@ -128,7 +128,9 @@ loadPage();
  */
 
 export async function getProductData(sku) {
-  const url = 'https://main--project-franklin-demo--bbtechd.hlx.live/api/products';
+  const environment = window.host.split('.').pop;
+
+  const url = `https://main--project-franklin-demo--bbtechd.hlx.${environment}/api/products`;
   let product = {};
   if (!sku) {
     return product;
