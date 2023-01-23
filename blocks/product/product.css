@@ -1,7 +1,7 @@
 figure.zoom {
     background-position: 50% 50%;
     position: relative;
-    border: 5px solid #ccc;
+    border: 5px solid #eee;
     max-width: 576px;
     overflow: hidden;
     cursor: zoom-in;
