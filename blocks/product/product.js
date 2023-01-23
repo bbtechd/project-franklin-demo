@@ -9,7 +9,7 @@ export default async function decorate(block) {
 
   const productInfo = await getProductData(sku);
 
-  const productName = productInfo.data.Name;
+  const productName = productInfo[0].Name;
 
   const productData = [];
 
