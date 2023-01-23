@@ -49,6 +49,7 @@ figure.zoom img:hover {
 
 .product-images{
     padding: 0 15px;
+    min-width: 200px;
 }
 
 img.product-image[data-block-status="loaded"]{
