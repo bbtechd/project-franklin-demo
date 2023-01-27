@@ -95,7 +95,7 @@ export default async function decorate(block) {
     document.body.style.overflow = 'hidden';
   });
 
-  window.addEventListener('click', (event)=>{
+  window.addEventListener('click', (event) => {
     const modal = block.querySelector('.product-image-modal');
     if (event.target === modal) {
       modal.style.display = 'none';

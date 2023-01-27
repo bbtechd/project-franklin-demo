@@ -127,19 +127,40 @@ loadPage();
  * extra
  */
 
+/**
+ * Get product Data as Json
+ * @param sku
+ * @returns {Promise<productData>}
+ */
 export async function getProductData(sku) {
-  const { hostname } = window.location;
-  let url = 'http://localhost:3000';
-  if (hostname.includes('hlx.page')) {
-    const environment = hostname.split('.').pop();
-    url = `https://main--project-franklin-demo--bbtechd.hlx.${environment}`;
-  }
+  const url = window.location.origin;
 
   let product = {};
   if (!sku) {
     return product;
   }
   const res = await fetch(`${url}/api/products/${sku}.json`);
+  if (!res.ok) {
+    throw Error('failed to get product data');
+  }
+  const json = await res.json();
+  product = json.data;
+  return product;
+}
+
+/**
+ * get category data as Json
+ * @param category
+ * @returns {Promise<categoryData>}
+ */
+export async function getCategoryData(category) {
+  const url = window.location.origin;
+
+  let product = {};
+  if (!category) {
+    return product;
+  }
+  const res = await fetch(`${url}/api/categories/${category}.json`);
   if (!res.ok) {
     throw Error('failed to get product data');
   }
