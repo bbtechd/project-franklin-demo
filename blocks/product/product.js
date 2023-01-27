@@ -1,4 +1,4 @@
-import { fetchPlaceholders } from '../../scripts/lib-franklin.js';
+import { fetchPlaceholders, getMetadata } from '../../scripts/lib-franklin.js';
 import { createTag, getProductData } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {

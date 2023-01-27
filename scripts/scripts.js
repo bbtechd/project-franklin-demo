@@ -69,8 +69,8 @@ const COMMERCE_PAGES = ['product', 'category'];
 
 function buildAutoBlocks(main) {
   try {
-    if (COMMERCE_PAGES.includes(getMetadata('pageType'))) {
-      buildAutoBlock(main, getMetadata('pageType'));
+    if (COMMERCE_PAGES.includes(getMetadata('pagetype'))) {
+      buildAutoBlock(main, getMetadata('pagetype'));
       document.body.classList.add('commerce-page');
     } else {
       buildHeroBlock(main);
