@@ -5,7 +5,7 @@
     line-height: 1.1;
     color: #000;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
 }
 
 .product-listings{
@@ -27,7 +27,11 @@
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
-    transition: border .2s ease-in-out;
+    transition: transform .2s;
+}
+
+.product-card:hover {
+    transform: scale(1.1);
 }
 
 .product-details{
