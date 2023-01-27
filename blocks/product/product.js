@@ -1,5 +1,5 @@
 import { fetchPlaceholders, getMetadata } from '../../scripts/lib-franklin.js';
-import { createTag, getProductData } from '../../scripts/scripts.js';
+import { createTag, getProductData, addMeta } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
@@ -10,6 +10,7 @@ export default async function decorate(block) {
   const productInfo = await getProductData(sku);
 
   const productName = productInfo[0].Name;
+  addMeta('description', productName);
 
   const productData = [];
 
@@ -24,6 +25,7 @@ export default async function decorate(block) {
   const productImageDiv = createTag('div', { class: 'product-images' });
   const productDetails = createTag('div', { class: 'product-details' });
 
+  document.title = `${productName} kaufen!`;
   productHeading.innerText = productName;
 
   productData.forEach((item, index) => {

@@ -232,3 +232,17 @@ export function createTag(tag, attributes, html) {
   }
   return el;
 }
+
+/**
+ * Add meta tag to head
+ * @param {string} name
+ * @param {string} pval
+ */
+export function addMeta(name, pval = '') {
+  const attr = name && name.includes(':') ? 'property' : 'name';
+  const val = pval.replace(/["'<>]/g, '');
+  const tag = document.createElement('meta');
+  tag.setAttribute(attr, name);
+  tag.content = val;
+  document.head.appendChild(tag);
+}

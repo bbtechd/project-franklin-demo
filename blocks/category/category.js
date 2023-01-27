@@ -1,4 +1,4 @@
-import { createTag, getCategoryData } from '../../scripts/scripts.js';
+import { createTag, getCategoryData, addMeta } from '../../scripts/scripts.js';
 
 export default async function decorate(block) {
   const productPath = `${window.location.origin}/products/`;
@@ -9,6 +9,8 @@ export default async function decorate(block) {
   const categoryInfo = await getCategoryData(category);
 
   const { categoryName } = categoryInfo[0];
+  addMeta('description', categoryName);
+  document.title = `${categoryName} kaufen!`;
 
   const categoryData = [];
 
