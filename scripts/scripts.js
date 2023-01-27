@@ -27,13 +27,54 @@ function buildHeroBlock(main) {
   }
 }
 
+export function el(str) {
+  const content = typeof str !== 'string' ? '' : str;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = content;
+  return tmp.firstElementChild;
+}
+
+export function htmlstr(strs, ...params) {
+  let res = '';
+  strs.forEach((s, i) => {
+    const p = params[i];
+    res += s;
+    if (!p) { return; }
+    if (p instanceof HTMLElement) {
+      res += p.outerHTML;
+    } else {
+      res += p;
+    }
+  });
+  return res;
+}
+
+export function html(strs, ...params) {
+  return el(htmlstr(strs, ...params));
+}
+
+function buildAutoBlock(main, blockName, replace = true, prepend = false) {
+  const section = html`<div>${buildBlock(blockName, { elems: [] })}</div>`;
+  if (replace) {
+    main.innerHTML = '';
+  }
+  return prepend ? main.prepend(section) : main.append(section);
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
+const COMMERCE_PAGES = ['product', 'category'];
+
 function buildAutoBlocks(main) {
   try {
-    buildHeroBlock(main);
+    if (COMMERCE_PAGES.includes(getMetadata('pageType'))) {
+      buildAutoBlock(main, getMetadata('pageType'));
+      document.body.classList.add('commerce-page');
+    } else {
+      buildHeroBlock(main);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
