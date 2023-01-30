@@ -13,7 +13,7 @@ import {
   loadCSS, getMetadata,
 } from './lib-franklin.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['hero', 'product', 'category']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
 function buildHeroBlock(main) {
@@ -49,12 +49,12 @@ export function htmlstr(strs, ...params) {
   return res;
 }
 
-export function html(strs, ...params) {
+export function toHtml(strs, ...params) {
   return el(htmlstr(strs, ...params));
 }
 
 function buildAutoBlock(main, blockName, replace = true, prepend = false) {
-  const section = html`<div>${buildBlock(blockName, { elems: [] })}</div>`;
+  const section = toHtml`<div>${buildBlock(blockName, { elems: [] })}</div>`;
   if (replace) {
     main.innerHTML = '';
   }
@@ -217,6 +217,7 @@ export async function getCategoryData(category) {
  */
 
 export function createTag(tag, attributes, html) {
+  // eslint-disable-next-line no-shadow
   const el = document.createElement(tag);
   if (html) {
     if (html instanceof HTMLElement || html instanceof SVGElement) {
