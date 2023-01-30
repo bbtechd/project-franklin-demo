@@ -94,7 +94,7 @@ export default async function decorate(block) {
       localStorage.setItem('token', token);
     } catch (error) {
       setError(error);
-      errorContainer.innerText = error;
+      errorContainer.innerText = error.message;
     }
   };
 
