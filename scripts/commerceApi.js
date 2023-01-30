@@ -17,6 +17,7 @@ export async function getCustomerToken(email, password) {
     // fetch content from external api endpoint
     const res = await fetch(apiEndpoint, {
       method: 'POST',
+      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
