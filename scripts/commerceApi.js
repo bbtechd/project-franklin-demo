@@ -1,4 +1,4 @@
-const apiEndpoint = 'https://graph.adobe.io/api/292bbb8c-7a12-4674-b2fe-870c846d8155/graphql?api_key=c15e2652e6b94af787aa1eae608041a7';
+const apiEndpoint = 'https://graph.adobe.io/api/a05f92bc-1f47-4272-ba64-e3cadbd593bd/graphql?api_key=8acda61db16c4d3da63c6a9f31d02913';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function getCustomerToken(email, password) {
