@@ -7,7 +7,17 @@ export default async function decorate(block) {
 
   const sku = window.location.pathname.split('/').pop();
 
-  const productInfo = await getProductData(sku);
+  let productInfo;
+
+  try {
+    productInfo = await getProductData(sku);
+  } catch (error) {
+    document.title = 'Produkt nicht gefunden!';
+    const productNotFound = createTag('div', { class: 'product-not-found' });
+    productNotFound.innerText = 'Das Produkt wurde nicht gefunden!';
+    block.append(productNotFound);
+    throw new Error(error);
+  }
 
   const productName = productInfo[0].Name;
   addMeta('description', productName);
