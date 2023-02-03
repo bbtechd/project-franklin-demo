@@ -1,5 +1,12 @@
+// Adobe Commerce/Magento GraphQL Api endpoint
 const apiEndpoint = 'https://graph.adobe.io/api/a05f92bc-1f47-4272-ba64-e3cadbd593bd/graphql?api_key=8acda61db16c4d3da63c6a9f31d02913';
 
+/**
+ * get customer authorization token
+ * @param {string} email
+ * @param {string} password
+ * @returns {Promise<token>}
+ */
 export async function getCustomerToken(email, password) {
   try {
     const query = `
@@ -12,8 +19,6 @@ export async function getCustomerToken(email, password) {
         }
       }
     `;
-
-    // fetch content from external api endpoint
     const res = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
@@ -47,6 +52,11 @@ export async function getCustomerToken(email, password) {
   }
 }
 
+/**
+ * get cart-Id and items in customer cart
+ * @param {string} token
+ * @returns {Promise<*>}
+ */
 export async function getCustomerCart(token) {
   try {
     const query = `
@@ -88,13 +98,21 @@ export async function getCustomerCart(token) {
       const { message } = content.errors[0];
       throw new Error(message);
     } else {
-      // ToDo
+      return content.data;
     }
   } catch (error) {
     throw new Error(error);
   }
 }
 
+/**
+ * add product(s) to commerce/magento cart
+ * @param {string} token
+ * @param {string} cartId
+ * @param {integer} quantity
+ * @param {string} sku
+ * @returns {Promise<*>}
+ */
 export async function addProductToCart(token, cartId, quantity, sku) {
   try {
     const query = `
@@ -154,7 +172,7 @@ export async function addProductToCart(token, cartId, quantity, sku) {
       const { message } = content.errors[0];
       throw new Error(message);
     } else {
-      // ToDo
+      return content.data;
     }
   } catch (error) {
     throw new Error(error);

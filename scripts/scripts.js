@@ -13,8 +13,6 @@ import {
   loadCSS, getMetadata,
 } from './lib-franklin.js';
 
-import { getProductFromCommerce } from './DataLayer.js';
-
 const LCP_BLOCKS = ['hero', 'product', 'category']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
@@ -164,56 +162,54 @@ async function loadPage() {
   loadDelayed();
 }
 
-if (getMetadata('pagetype') === 'api') {
-  getProductFromCommerce();
-} else {
-  loadPage();
-}
+loadPage();
 
 /**
  * extra
  */
 
 /**
- * Get product Data as Json
- * @param sku
+ * Get product data as Json
+ * @param {string} sku
  * @returns {Promise<productData>}
+ * ToDo: should be replaced by calling the commerce api
  */
 export async function getProductData(sku) {
   const url = window.location.origin;
 
-  let product = {};
+  let productData = {};
   if (!sku) {
-    return product;
+    return productData;
   }
   const res = await fetch(`${url}/api/products/${sku}.json`);
   if (!res.ok) {
     throw Error('failed to get product data');
   }
   const json = await res.json();
-  product = json.data;
-  return product;
+  productData = json.data;
+  return productData;
 }
 
 /**
- * get category data as Json
- * @param category
+ * Get category data as Json
+ * @param {string} category
  * @returns {Promise<categoryData>}
+ * ToDo: should be replaced by calling the commerce api
  */
 export async function getCategoryData(category) {
   const url = window.location.origin;
 
-  let product = {};
+  let categoryData = {};
   if (!category) {
-    return product;
+    return categoryData;
   }
   const res = await fetch(`${url}/api/categories/${category}.json`);
   if (!res.ok) {
     throw Error('failed to get product data');
   }
   const json = await res.json();
-  product = json.data;
-  return product;
+  categoryData = json.data;
+  return categoryData;
 }
 
 /**
@@ -252,12 +248,4 @@ export function addMeta(name, pval = '') {
   tag.setAttribute(attr, name);
   tag.content = val;
   document.head.appendChild(tag);
-}
-
-export function formatPrice(price, currency, locale) {
-  return new Intl.NumberFormat(locale, {
-    style: 'currency',
-    currency,
-    currencyDisplay: 'symbol',
-  }).format(price);
 }
