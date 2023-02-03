@@ -13,6 +13,8 @@ import {
   loadCSS, getMetadata,
 } from './lib-franklin.js';
 
+import { getProductFromCommerce } from './DataLayer.js';
+
 const LCP_BLOCKS = ['hero', 'product', 'category']; // add your LCP blocks to the list
 window.hlx.RUM_GENERATION = 'project-1'; // add your RUM generation information here
 
@@ -162,7 +164,11 @@ async function loadPage() {
   loadDelayed();
 }
 
-loadPage();
+if (getMetadata('pagetype') === 'api') {
+  getProductFromCommerce();
+} else {
+  loadPage();
+}
 
 /**
  * extra
@@ -246,4 +252,12 @@ export function addMeta(name, pval = '') {
   tag.setAttribute(attr, name);
   tag.content = val;
   document.head.appendChild(tag);
+}
+
+export function formatPrice(price, currency, locale) {
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+    currencyDisplay: 'symbol',
+  }).format(price);
 }

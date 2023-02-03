@@ -73,8 +73,33 @@ export default async function decorate(block) {
     }
   });
 
+  const productConfig = createTag('div', { class: 'product-config' });
+  const addToButton = createTag('div', { class: 'product-addto' });
+  addToButton.innerHTML = `<p class="button-container"><button>${placeholders.addToCart}</button></p>`;
+
+  const createQuantity = () => {
+    const div = document.createElement('div');
+    div.className = 'product-quantity';
+    div.innerHTML = `<h6>${placeholders.quantity}</h6><div><button class="product-quantity-minus"></button>
+    <input type="number" min="1" value="1" max="20">
+    <button class="product-quantity-plus"></button></div>`;
+    const [minus, input, plus] = [...div.querySelectorAll('button, input')];
+    plus.addEventListener('click', () => {
+      if (input.value !== input.getAttribute('max')) {
+        input.value = +input.value + 1;
+      }
+    });
+    minus.addEventListener('click', () => {
+      if (input.value !== input.getAttribute('min')) {
+        input.value = +input.value - 1;
+      }
+    });
+    return div;
+  };
+
   block.innerHTML = '';
-  productDetailsDiv.append(productImageDiv, productDetails);
+  productConfig.append(createQuantity(), addToButton);
+  productDetailsDiv.append(productImageDiv, productConfig, productDetails);
   block.append(productHeading, productDetailsDiv);
 
   document.querySelector('.zoom').addEventListener('mousemove', (event)=>{
