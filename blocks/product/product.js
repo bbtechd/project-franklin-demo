@@ -35,8 +35,13 @@ export default async function decorate(block) {
   const productImageDiv = createTag('div', { class: 'product-images' });
   const productDetails = createTag('div', { class: 'product-details' });
 
+  const productPrice = createTag('div', { class: 'product-price' });
+  const price = productInfo[0].Price;
+  productPrice.innerText = `${price} €`;
+
   document.title = `${productName} kaufen!`;
   productHeading.innerText = productName;
+  productHeading.append(productPrice);
 
   productData.forEach((item, index) => {
     if (item) {

@@ -46,6 +46,7 @@ figure.zoom img:hover {
     flex-direction: row;
     flex-wrap: wrap;
     padding-bottom: 40px;
+    font-weight: lighter;
 }
 
 .product-images{
@@ -127,6 +128,8 @@ img.product-image-thumbnails{
     color: #000;
     margin-top: 20px;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .product-not-found{
@@ -161,7 +164,7 @@ img.product-image-thumbnails{
 }
 
 .product-quantity button:hover {
-    background-color: unset;
+    background-color: #eee;
 }
 
 .product-quantity button::after,
@@ -197,4 +200,8 @@ img.product-image-thumbnails{
 
 .product-addto {
     text-align: center;
+}
+
+.product-price{
+    font-weight: lighter;
 }
