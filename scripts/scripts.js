@@ -27,14 +27,24 @@ function buildHeroBlock(main) {
   }
 }
 
-export function el(str) {
+/**
+ * Make element from template string
+ * @param {string} str
+ * @returns {HTMLElement}
+ */
+function el(str) {
   const content = typeof str !== 'string' ? '' : str;
   const tmp = document.createElement('div');
   tmp.innerHTML = content;
   return tmp.firstElementChild;
 }
 
-export function htmlstr(strs, ...params) {
+/**
+ * HTML string template tag
+ * @param {string[]} strs
+ * @param  {...(string|Element)} params
+ */
+function htmlStr(strs, ...params) {
   let res = '';
   strs.forEach((s, i) => {
     const p = params[i];
@@ -49,12 +59,23 @@ export function htmlstr(strs, ...params) {
   return res;
 }
 
-export function toHtml(strs, ...params) {
-  return el(htmlstr(strs, ...params));
+/**
+ * HTML element template tag
+ * @returns {HTMLElement}
+ */
+function htmlEl(strs, ...params) {
+  return el(htmlStr(strs, ...params));
 }
 
+/**
+ * Builds an AutoBlock, the contents of which will be put into main
+ * @param {HTMLElement} main
+ * @param {string} blockName
+ * @param {boolean} [replace=true]
+ * @param {boolean} [prepend=false]
+ */
 function buildAutoBlock(main, blockName, replace = true, prepend = false) {
-  const section = toHtml`<div>${buildBlock(blockName, { elems: [] })}</div>`;
+  const section = htmlEl`<div>${buildBlock(blockName, { elems: [] })}</div>`;
   if (replace) {
     main.innerHTML = '';
   }
@@ -217,7 +238,6 @@ export async function getCategoryData(category) {
  * @param {string} tag DOM element to be created
  * @param {array} attributes attributes to be added
  */
-
 export function createTag(tag, attributes, html) {
   // eslint-disable-next-line no-shadow
   const el = document.createElement(tag);
@@ -238,14 +258,14 @@ export function createTag(tag, attributes, html) {
 
 /**
  * Add meta tag to head
- * @param {string} name
- * @param {string} pval
+ * @param {string} pName property name
+ * @param {string} pVal property value
  */
-export function addMeta(name, pval = '') {
-  const attr = name && name.includes(':') ? 'property' : 'name';
-  const val = pval.replace(/["'<>]/g, '');
+export function addMeta(pName, pVal = '') {
+  const attr = pName && pName.includes(':') ? 'property' : 'name';
+  const val = pVal.replace(/["'<>]/g, '');
   const tag = document.createElement('meta');
-  tag.setAttribute(attr, name);
+  tag.setAttribute(attr, pName);
   tag.content = val;
   document.head.appendChild(tag);
 }
