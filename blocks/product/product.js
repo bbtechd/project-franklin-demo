@@ -75,7 +75,7 @@ export default async function decorate(block) {
 
   const productConfig = createTag('div', { class: 'product-config' });
   const addToButton = createTag('div', { class: 'product-addto' });
-  addToButton.innerHTML = `<p class="button-container"><button>${placeholders.addToCart}</button></p>`;
+  addToButton.innerHTML = `<p class="button-container"><button>${placeholders.addtocart}</button></p>`;
 
   const createQuantity = () => {
     const div = document.createElement('div');
