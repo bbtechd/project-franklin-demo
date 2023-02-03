@@ -10,7 +10,7 @@ export default async function decorate(block) {
 
   const { categoryName } = categoryInfo[0];
   addMeta('description', categoryName);
-  document.title = `${categoryName} kaufen!`;
+  document.title = `${categoryName}`;
 
   const categoryData = [];
 

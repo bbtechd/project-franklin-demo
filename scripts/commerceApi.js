@@ -109,7 +109,7 @@ export async function getCustomerCart(token) {
  * add product(s) to commerce/magento cart
  * @param {string} token
  * @param {string} cartId
- * @param {integer} quantity
+ * @param {number} quantity
  * @param {string} sku
  * @returns {Promise<*>}
  */

@@ -98,7 +98,7 @@ export default async function decorate(block) {
     }
   };
 
-  // SignOUt Method
+  // SignOut Method
   signOutForm.onsubmit = (event) => {
     event.preventDefault();
     localStorage.removeItem('token');

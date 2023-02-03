@@ -1,4 +1,4 @@
-import { fetchPlaceholders, getMetadata } from '../../scripts/lib-franklin.js';
+import { fetchPlaceholders } from '../../scripts/lib-franklin.js';
 import { createTag, getProductData, addMeta } from '../../scripts/scripts.js';
 import { addProductToCart } from '../../scripts/commerceApi.js';
 
@@ -16,9 +16,9 @@ export default async function decorate(block) {
   try {
     productInfo = await getProductData(sku);
   } catch (error) {
-    document.title = 'Produkt nicht gefunden!';
+    document.title = placeholders.prodnotfoundtitle;
     const productNotFound = createTag('div', { class: 'product-not-found' });
-    productNotFound.innerText = 'Das Produkt wurde nicht gefunden!';
+    productNotFound.innerText = placeholders.prodnotfound;
     block.append(productNotFound);
     throw new Error(error);
   }
@@ -43,7 +43,7 @@ export default async function decorate(block) {
   const price = productInfo[0].Price;
   productPrice.innerText = `${price} €`;
 
-  document.title = `${productName} kaufen!`;
+  document.title = `${productName}`;
   productHeading.innerText = productName;
   productHeading.append(productPrice);
 
@@ -85,10 +85,11 @@ export default async function decorate(block) {
   const productConfig = createTag('div', { class: 'product-config' });
 
   async function addToCart() {
-    // ToDo
     const token = localStorage.getItem('token');
-    const cartId = localStorage.getItem('cartId');
-    const productSku = ''; // product sku
+    // ToDo get cart Id
+    const cartId = '';
+    // ToDo: get product sku
+    const productSku = '';
     const quantity = +block.querySelector('.product-quantity input').value;
     await addProductToCart(token, cartId, quantity, productSku);
     return null;
