@@ -1,5 +1,9 @@
 import { fetchPlaceholders, getMetadata } from '../../scripts/lib-franklin.js';
 import { createTag, getProductData, addMeta } from '../../scripts/scripts.js';
+import { addProductToCart } from '../../scripts/commerceApi.js';
+
+// eslint-disable-next-line import/no-unresolved
+const confetti = () => import('https://cdn.skypack.dev/canvas-confetti');
 
 export default async function decorate(block) {
   const placeholders = await fetchPlaceholders();
@@ -79,8 +83,36 @@ export default async function decorate(block) {
   });
 
   const productConfig = createTag('div', { class: 'product-config' });
-  const addToButton = createTag('div', { class: 'product-addto' });
-  addToButton.innerHTML = `<p class="button-container"><button>${placeholders.addtocart}</button></p>`;
+
+  async function addToCart() {
+    // ToDo
+    const token = localStorage.getItem('token');
+    const cartId = localStorage.getItem('cartId');
+    const productSku = ''; // product sku
+    const quantity = +block.querySelector('.product-quantity input').value;
+    await addProductToCart(token, cartId, quantity, productSku);
+    return null;
+  }
+
+  const createAddToButtons = () => {
+    const div = document.createElement('div');
+    div.className = 'product-addto';
+    div.innerHTML = `<p class="button-container"><button>${placeholders.addtocart}</button></p>`;
+    const button = div.querySelector('button');
+    button.addEventListener('click', () => {
+      button.textContent = placeholders.addingtocart;
+      addToCart().finally(() => {
+        button.textContent = placeholders.addtocart;
+        confetti().then((m) => {
+          m.default({
+            particleCount: 200,
+            spread: 100,
+          });
+        });
+      });
+    });
+    return div;
+  };
 
   const createQuantity = () => {
     const div = document.createElement('div');
@@ -103,7 +135,7 @@ export default async function decorate(block) {
   };
 
   block.innerHTML = '';
-  productConfig.append(createQuantity(), addToButton);
+  productConfig.append(createQuantity(), createAddToButtons());
   productDetailsDiv.append(productImageDiv, productConfig, productDetails);
   block.append(productHeading, productDetailsDiv);
 
